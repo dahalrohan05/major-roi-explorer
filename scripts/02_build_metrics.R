@@ -1,22 +1,19 @@
 library(tidyverse)
 
-# ---------------------------
-# STEP 1: Load cleaned data
-# ---------------------------
+
+# Load cleaned data
 fos_clean <- read_csv("data/processed/fos_clean.csv", show_col_types = FALSE)
 
-# ---------------------------
-# STEP 2: Remove extreme outliers (optional but good practice)
-# ---------------------------
+
+# Remove outliers 
 fos_clean <- fos_clean %>%
   filter(
     earnings_5yr > 1000,
     earnings_5yr < 500000
   )
 
-# ---------------------------
-# STEP 3: Create major-level summary
-# ---------------------------
+
+# Create major-level summary
 major_summary <- fos_clean %>%
   group_by(major_name) %>%
   summarise(
@@ -29,9 +26,8 @@ major_summary <- fos_clean %>%
     .groups = "drop"
   )
 
-# ---------------------------
-# STEP 4: Create ranking metrics
-# ---------------------------
+
+# Create ranking metrics
 major_summary <- major_summary %>%
   mutate(
     earnings_rank = dense_rank(desc(median_earnings_5yr)),
@@ -39,9 +35,7 @@ major_summary <- major_summary %>%
     consistency_rank = dense_rank(earnings_variation)
   )
 
-# ---------------------------
-# STEP 5: Create flags
-# ---------------------------
+# Create flag
 earnings_cutoff <- quantile(
   major_summary$median_earnings_5yr,
   0.25,
@@ -60,13 +54,10 @@ major_summary <- major_summary %>%
     high_growth_flag = median_growth >= growth_cutoff
   )
 
-# ---------------------------
-# STEP 6: Save results
-# ---------------------------
+
+# Save results
 write_csv(major_summary, "data/processed/major_summary.csv")
 
 cat("Saved major_summary.csv successfully\n")
 
-# Quick preview
-print(head(major_summary))
 
