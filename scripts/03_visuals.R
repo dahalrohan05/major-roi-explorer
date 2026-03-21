@@ -1,14 +1,11 @@
 library(tidyverse)
 library(scales)
 
-# ---------------------------
-# STEP 1: Load summary data
-# ---------------------------
+# Load summary data
 major_summary <- read_csv("data/processed/major_summary.csv", show_col_types = FALSE)
 
-# ---------------------------
-# 1. Top 10 Majors by 5-Year Earnings
-# ---------------------------
+
+# Top 10 Majors by 5-Year Earnings
 top_earnings <- major_summary %>%
   arrange(desc(median_earnings_5yr)) %>%
   slice(1:10)
@@ -26,9 +23,8 @@ p1 <- ggplot(top_earnings,
 
 ggsave("figures/top_5yr_earnings.png", p1, width = 8, height = 5)
 
-# ---------------------------
-# 2. Top 10 Majors by Earnings Growth
-# ---------------------------
+
+# Top 10 Majors by Earnings Growth
 top_growth <- major_summary %>%
   arrange(desc(median_growth)) %>%
   slice(1:10)
@@ -46,9 +42,7 @@ p2 <- ggplot(top_growth,
 
 ggsave("figures/top_growth.png", p2, width = 8, height = 5)
 
-# ---------------------------
-# 3. Distribution of 5-Year Earnings
-# ---------------------------
+# Distribution of 5-Year Earnings
 p3 <- ggplot(major_summary,
              aes(x = median_earnings_5yr)) +
   geom_histogram(bins = 40, fill = "purple", alpha = 0.7) +
@@ -60,9 +54,8 @@ p3 <- ggplot(major_summary,
 
 ggsave("figures/earnings_distribution.png", p3, width = 8, height = 5)
 
-# ---------------------------
-# 4. Majors with Highest Earnings Variation
-# ---------------------------
+
+# Majors with Highest Earnings Variation
 top_variation <- major_summary %>%
   arrange(desc(earnings_variation)) %>%
   slice(1:10)
