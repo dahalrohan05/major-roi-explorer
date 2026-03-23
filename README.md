@@ -1,5 +1,7 @@
 # Major Earnings Explorer
+## Live Report
 
+[View the live project report](https://dahalrohan05.github.io/major-roi-explorer/)
 ## Overview
 
 Major Earnings Explorer is a business analytics project that evaluates U.S. bachelor’s majors using College Scorecard field-of-study data. The project focuses on comparing majors by early-career earnings, 5-year earnings, earnings growth, and variation across institutions.
