@@ -1,14 +1,10 @@
 library(tidyverse)
 library(scales)
 
-# ---------------------------
-# STEP 1: Load cleaned data
-# ---------------------------
+# Load cleaned data
 fos_clean <- read_csv("data/processed/fos_clean.csv", show_col_types = FALSE)
 
-# ---------------------------
-# STEP 2: Sector-level summary
-# ---------------------------
+# Sector-level summary
 sector_summary <- fos_clean %>%
   group_by(institution_type) %>%
   summarise(
@@ -22,9 +18,8 @@ sector_summary <- fos_clean %>%
 
 print(sector_summary)
 
-# ---------------------------
-# STEP 3: Visualization
-# ---------------------------
+
+# Visualization
 p_sector <- ggplot(sector_summary,
                    aes(x = institution_type,
                        y = median_earnings_5yr,
